@@ -26,14 +26,11 @@ export const userSlice = createSlice({
             state.followers = followers;
             state.public_repos = public_repos;
             state.avatar_url = avatar_url;
-        },
-        setLoading: (state, action) => {
-            state.loading = action.payload;
         }
     }
 })
 
 
-export const {userInfo, setLoading} = userSlice.actions;
+export const {userInfo } = userSlice.actions;
 
 export default userSlice.reducer;
