@@ -25,11 +25,11 @@ la URL de la API de github es la siguiente: `https://api.github.com/users/` si a
 
 
 Los datos serán:
-- Nombre
-- Nombre de usuario
-- Seguidores
-- Repositorios públicos
-- Imagen
+- Nombre : name
+- Nombre de usuario: login
+- Seguidores: followers: followers
+- Repositorios públicos : public_repos
+- Imagen: avatar_url
 
 Para manejar el estado globar usaremos REDUX y ahí es donde guardaremos los datos del usuario que nos traigamos.
 
