@@ -31,6 +31,7 @@ const InputUser = () => {
 
     return (
         <>
+        <h2>Buscador de usuarios de Github</h2>
             <input type="text" value={userInput} onChange={(e) => setUserInput(e.target.value)}/>
             {loading && <div>Loading...</div>}
             {error && <div>{error}</div>}
