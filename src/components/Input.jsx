@@ -1,33 +1,48 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const InputUser = () => {
-    const [userendpoint, setUserendpoint] = useState('');
-    const [userData, setUserData] = useState('')
+    const [userInput, setUserInput] = useState('');
+    const [userData, setUserData] = useState(null)
     const [loading, setLoading ] = useState(true);
+    const [error, setError] = useState('');
 
     useEffect(() => {
+        if(!userInput) return;
+
         const timer = setTimeout( async() => {
             setUserData(null);
             setLoading(true);
+            setError('');
             try {
-                const response = await fetch(`https://api.github.com/users/${userendpoint.toLowerCase()}`)
+                const response = await fetch(`https://api.github.com/users/${userInput.toLowerCase()}`)
+                if(!response.ok) throw new Error('Usuario no encontrado')
                 const data = await response.json();
                 setUserData(data);
-                setLoading(false);
             } catch (error) {
-                console.log(error);
+                setError(error.message);
+            } finally {
+                setLoading(false)
             }
         }, 1000);
 
-        timer();
+        return () => clearTimeout(timer);
 
-    }, [userendpoint])
+    }, [userInput])
 
     return (
         <>
-            <input type="text" value={userendpoint} onChange={(e) => setUserendpoint(e.target.value)}/>
+            <input type="text" value={userInput} onChange={(e) => setUserInput(e.target.value)}/>
             {loading && <div>Loading...</div>}
-            
+            {error && <div>{error}</div>}
+            {userData ? (
+                <div>
+                    <h2>Nombre: {userData.name}</h2>
+                    <p>UserName: {userData.login}</p>
+                    <p>Followers: {userData.followers}</p>
+                    <p>Public Repos: {userData.public_repos}</p>
+                    <img src={userData.avatar_url} alt={userData.name} />
+                </div>
+            ): null }
 
         </>
     )
